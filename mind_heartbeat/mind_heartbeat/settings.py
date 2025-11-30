@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+from django.contrib.messages import constants as messages
+
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,7 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Local apps
     "accounts.apps.AccountsConfig",
-    "stamps.apps.StampsConfig",
+    "feelings.apps.FeelingsConfig",
     # Third-party apps
     "rest_framework",
     "corsheaders",
@@ -61,7 +63,7 @@ ROOT_URLCONF = "mind_heartbeat.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -122,6 +124,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -172,7 +176,7 @@ LOGGING = {
             "handlers": ["console"],
             "level": "DEBUG",
         },
-        "stamps": {
+        "feelings": {
             "handlers": ["console"],
             "level": "DEBUG",
         },
@@ -198,4 +202,12 @@ LOGGING = {
             )
         },
     },
+}
+
+MESSAGE_TAGS = {
+    messages.DEBUG: "bg-gray-100 border border-gray-300 text-gray-700",
+    messages.INFO: "bg-blue-50 border border-blue-200 text-blue-800",
+    messages.SUCCESS: "bg-green-50 border border-green-200 text-green-800",
+    messages.WARNING: "bg-yellow-50 border border-yellow-200 text-yellow-800",
+    messages.ERROR: "bg-red-50 border border-red-200 text-red-800",
 }
