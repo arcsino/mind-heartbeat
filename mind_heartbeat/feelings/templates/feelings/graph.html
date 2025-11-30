@@ -1,0 +1,68 @@
+{% extends "_shared/base.html" %} {% block title %}Feelings Graph - Mind
+Heartbeat{% endblock %} {% block content %}
+<a
+  href="{% url 'feelings:list' %}"
+  class="inline-block mb-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-4 py-2 rounded-lg shadow transition"
+  >&larr; Back to List</a
+>
+<div
+  class="max-w-2xl mx-auto bg-white border border-gray-200 rounded-xl shadow-lg p-8 mt-8"
+>
+  <h1 class="text-2xl font-bold mb-6 text-center">Feelings Score Over Time</h1>
+  <canvas id="feelingsChart" class="w-full h-80"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('feelingsChart').getContext('2d');
+  const labels = {{ labels|safe }};
+  const scores = {{ scores|safe }};
+  const comments = {{ comments|safe }}; // 新たにビューで渡す必要あり
+  new Chart(ctx, {
+  	type: 'line',
+  	data: {
+  		labels: labels,
+  		datasets: [{
+  			label: 'Score',
+  			data: scores,
+  			borderColor: '#3b82f6',
+  			backgroundColor: function(context) {
+  				const chart = context.chart;
+  				const {ctx, chartArea} = chart;
+  				if (!chartArea) return null;
+  				const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+  				gradient.addColorStop(0, 'rgba(59,130,246,0.3)');
+  				gradient.addColorStop(1, 'rgba(59,130,246,0.01)');
+  				return gradient;
+  			},
+  			tension: 0,
+  			pointRadius: 4,
+  			pointBackgroundColor: '#3b82f6',
+  			fill: true,
+  		}]
+  	},
+  	options: {
+  		responsive: true,
+  		plugins: {
+  			legend: { display: false },
+  			tooltip: {
+  				callbacks: {
+  					afterBody: function(context) {
+  						const idx = context[0].dataIndex;
+  						const comment = comments[idx] || '';
+  						return comment ? 'Comment: ' + comment : '';
+  					}
+  				}
+  			}
+  		},
+  		scales: {
+  			y: {
+  				min: -4,
+  				max: 4,
+  				title: { display: true, text: 'Score' }
+  			},
+  			x: { title: { display: true, text: 'Time' } }
+  		}
+  	}
+  });
+</script>
+{% endblock %}

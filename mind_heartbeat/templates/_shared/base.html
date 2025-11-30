@@ -1,0 +1,20 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Mind Heartbeat{% endblock %}</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="{% static 'common/css/common.css' %}" rel="stylesheet" />
+    {% block extra_head %}{% endblock %}
+  </head>
+  <body>
+    {% include "_shared/components/navbar.html" %}
+    <div>{% include "_shared/components/message.html" %}</div>
+    <div class="container mx-auto px-4 py-8">
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<nav class="bg-gray-800 p-4 text-white">
+  <div class="container mx-auto flex items-center justify-between">
+    <a href="/" class="text-lg font-semibold tracking-wide">Mind Heartbeat</a>
+    <ul class="flex gap-6 text-sm font-medium">
+      <li>
+        <a
+          href="{% url 'feelings:list' %}"
+          class="hover:text-blue-300 transition"
+        >
+          Feelings List
+        </a>
+      </li>
+      <li>
+        <a
+          href="{% url 'feelings:create' %}"
+          class="hover:text-blue-300 transition"
+        >
+          Create Feeling
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,36 @@
+{% extends "_shared/base.html" %} {% block title %}Feelings List - Mind
+Heartbeat{% endblock %} {% block content %}
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold">Feelings List</h1>
+  <a
+    href="{% url 'feelings:graph' %}"
+    class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow transition"
+    >Show Graph</a
+  >
+</div>
+<ul class="space-y-4">
+  {% for feeling in feelings_list %}
+  <li>
+    <a
+      href="{% url 'feelings:detail' feeling.pk %}"
+      class="block transition shadow-sm hover:shadow-lg hover:bg-blue-50 bg-gradient-to-r from-white to-gray-50 rounded-xl p-5 flex flex-col gap-2 border border-gray-200 focus:ring-2 focus:ring-blue-300 outline-none"
+    >
+      <div class="flex items-center gap-3">
+        <span class="text-xs text-gray-400"
+          >{{ feeling.created_at|date:'Y-m-d H:i' }}</span
+        >
+        <span
+          class="inline-block px-2 py-1 text-xs font-medium rounded bg-blue-100 text-blue-700"
+          >{{ feeling.stamp.name }}</span
+        >
+      </div>
+      <p class="text-gray-700 text-base leading-relaxed">
+        {{ feeling.comment }}
+      </p>
+    </a>
+  </li>
+  {% empty %}
+  <li class="text-gray-500">No feelings.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
