@@ -37,12 +37,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         # Username uniqueness check
         if User.objects.filter(username=username).exists():
             raise serializers.ValidationError(
-                detail=f"**{username}**このユーザー名は既に使用されています。"
+                detail=f"**{username}**このユーザ名は既に使用されています。"
             )
         # Username format check
         if not re.match(pattern=r"^[\w.@+-]+$", string=username):
             raise serializers.ValidationError(
-                detail=f"**{username}**このユーザー名は無効です。"
+                detail=f"**{username}**このユーザ名は無効です。"
             )
         # Password match check
         if password != password2:
@@ -101,12 +101,12 @@ class LoginSerializer(serializers.Serializer):
             )
             if not user:
                 raise serializers.ValidationError(
-                    detail="ログインに失敗しました。ユーザー名またはパスワードが正しくありません。",
+                    detail="ログインに失敗しました。ユーザ名またはパスワードが正しくありません。",
                     code="authorization",
                 )
         else:
             raise serializers.ValidationError(
-                detail="ユーザー名とパスワードの両方を入力してください。",
+                detail="ユーザ名とパスワードの両方を入力してください。",
                 code="authorization",
             )
 
@@ -147,12 +147,12 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             # Username uniqueness check
             if User.objects.exclude(id=user_id).filter(username=username).exists():
                 raise serializers.ValidationError(
-                    detail=f"**{username}**このユーザー名は既に使用されています。"
+                    detail=f"**{username}**このユーザ名は既に使用されています。"
                 )
             # Username format check
             if not re.match(pattern=r"^[\w.@+-]+$", string=username):
                 raise serializers.ValidationError(
-                    detail=f"**{username}**このユーザー名は無効です。"
+                    detail=f"**{username}**このユーザ名は無効です。"
                 )
             # Nickname uniqueness check
             if User.objects.exclude(id=user_id).filter(nickname=nickname).exists():

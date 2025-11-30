@@ -6,17 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0005_alter_user_options_alter_user_nickname_and_more'),
+        ("accounts", "0005_alter_user_options_alter_user_nickname_and_more"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='user',
-            options={'verbose_name': 'ユーザー', 'verbose_name_plural': 'ユーザ一一覧'},
+            name="user",
+            options={"verbose_name": "ユーザ", "verbose_name_plural": "ユーザ一一覧"},
         ),
         migrations.AlterField(
-            model_name='user',
-            name='nickname',
-            field=models.CharField(default='匿名979f70a55536', max_length=30, unique=True, verbose_name='ニックネーム'),
+            model_name="user",
+            name="nickname",
+            field=models.CharField(
+                default="匿名979f70a55536",
+                max_length=30,
+                unique=True,
+                verbose_name="ニックネーム",
+            ),
         ),
     ]

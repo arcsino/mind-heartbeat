@@ -25,7 +25,7 @@ class UserRegistrationAPIView(generics.CreateAPIView):
             user = serializer.save()
             return Response(
                 data={
-                    "message": "ユーザー登録に成功しました。",
+                    "message": "ユーザ登録に成功しました。",
                     "user": UserRegistrationSerializer(user).data,
                 },
                 status=status.HTTP_201_CREATED,
@@ -71,7 +71,7 @@ class UserDetailAPIView(generics.RetrieveAPIView):
         serializer = self.get_serializer(instance)
         return Response(
             data={
-                "message": "ユーザー情報の取得に成功しました。",
+                "message": "ユーザ情報の取得に成功しました。",
                 "user": serializer.data,
             },
             status=status.HTTP_200_OK,
@@ -97,7 +97,7 @@ class UserUpdateAPIView(generics.UpdateAPIView):
             self.perform_update(serializer)
             return Response(
                 data={
-                    "message": "ユーザー情報の更新に成功しました。",
+                    "message": "ユーザ情報の更新に成功しました。",
                     "user": UserUpdateSerializer(instance).data,
                 },
                 status=status.HTTP_200_OK,
@@ -157,6 +157,6 @@ class UserDeleteAPIView(generics.DestroyAPIView):
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response(
-            data={"message": "ユーザーの削除に成功しました。"},
+            data={"message": "ユーザの削除に成功しました。"},
             status=status.HTTP_200_OK,
         )
