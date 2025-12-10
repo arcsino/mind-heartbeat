@@ -8,7 +8,7 @@ class StampAdmin(admin.ModelAdmin):
     list_display = ("name", "score", "id")
     search_fields = ("name",)
     readonly_fields = ("created_at", "updated_at", "id")
-    ordering = ("-created_at",)
+    ordering = ("score",)
 
 
 @admin.register(Feeling)
