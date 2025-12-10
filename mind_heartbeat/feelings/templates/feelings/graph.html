@@ -1,5 +1,5 @@
-{% extends "_shared/base.html" %} {% block title %}Feelings Graph - Mind
-Heartbeat{% endblock %} {% block content %}
+{% extends "_shared/base.html" %} {% load static %} {% block title %}Feelings
+Graph - Mind Heartbeat{% endblock %} {% block content %}
 <a
   href="{% url 'feelings:list' %}"
   class="inline-block mb-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-4 py-2 rounded-lg shadow transition"
@@ -13,10 +13,19 @@ Heartbeat{% endblock %} {% block content %}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const ctx = document.getElementById('feelingsChart').getContext('2d');
+  const ctx = document.getElementById('feelingsChart').getContext('2d');
   const labels = {{ labels|safe }};
   const scores = {{ scores|safe }};
-  const comments = {{ comments|safe }}; // 新たにビューで渡す必要あり
+  const comments = {{ comments|safe }};
+  const yLabels = {{ y_labels|safe }};
+  const yScores = {{ y_scores|safe }};
+  // スタンプ画像のstaticパスリストを生成
+  const stampImages = [
+  	{% for img in stamp_images %}
+  		'{% static "feelings/stamps/" %}{{ img }}'{% if not forloop.last %},{% endif %}
+  	{% endfor %}
+  ];
+
   new Chart(ctx, {
   	type: 'line',
   	data: {
@@ -36,6 +45,12 @@ Heartbeat{% endblock %} {% block content %}
   			},
   			tension: 0,
   			pointRadius: 4,
+  			pointStyle: scores.map((_, i) => {
+  				// スタンプ画像を循環して割り当てる（例:スコアやy軸に応じて割り当てる場合は調整）
+  				const img = new Image();
+  				img.src = stampImages[i % stampImages.length];
+  				return img;
+  			}),
   			pointBackgroundColor: '#3b82f6',
   			fill: true,
   		}]
@@ -56,9 +71,10 @@ Heartbeat{% endblock %} {% block content %}
   		},
   		scales: {
   			y: {
-  				min: -4,
-  				max: 4,
-  				title: { display: true, text: 'Score' }
+  				type: 'category',
+  				labels: yLabels,
+  				title: { display: true, text: 'Stamp' },
+  				reverse: true // 上が高い順
   			},
   			x: { title: { display: true, text: 'Time' } }
   		}
