@@ -1,23 +1,65 @@
 <nav class="bg-gray-800 p-4 text-white">
   <div class="container mx-auto flex items-center justify-between">
-    <a href="/" class="text-lg font-semibold tracking-wide">Mind Heartbeat</a>
-    <ul class="flex gap-6 text-sm font-medium">
-      <li>
-        <a
-          href="{% url 'feelings:list' %}"
-          class="hover:text-blue-300 transition"
-        >
-          Feelings List
-        </a>
-      </li>
-      <li>
-        <a
-          href="{% url 'feelings:create' %}"
-          class="hover:text-blue-300 transition"
-        >
-          Create Feeling
-        </a>
-      </li>
+    <a href="{% url 'feelings:index' %}"
+       class="text-lg font-semibold tracking-wide">Mind Heartbeat</a>
+    <ul class="flex gap-6 text-sm font-medium items-center">
+      {% if user.is_authenticated %}
+        <li>
+          <a href="{% url 'feelings:list' %}"
+             class="hover:text-blue-300 transition">Feelings List</a>
+        </li>
+        <li>
+          <a href="{% url 'feelings:create' %}"
+             class="hover:text-blue-300 transition">Create Feeling</a>
+        </li>
+        <li class="flex items-center gap-4">
+          <div class="relative group">
+            <button class="flex items-center gap-2 focus:outline-none rounded-lg px-2 py-1">
+              <span>Settings</span>
+              <svg class="w-4 h-4"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="2"
+                   viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <ul class="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-lg py-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity z-50">
+              <li>
+                <a href="{% url 'accounts:profile' %}"
+                   class="block px-4 py-2 hover:bg-gray-100">プロフィール</a>
+              </li>
+              <li>
+                <a href="{% url 'accounts:nickname-update' %}"
+                   class="block px-4 py-2 hover:bg-gray-100">ニックネーム変更</a>
+              </li>
+              <li>
+                <a href="{% url 'accounts:password-change' %}"
+                   class="block px-4 py-2 hover:bg-gray-100">パスワード変更</a>
+              </li>
+              <li>
+                <a href="{% url 'accounts:logout' %}"
+                   class="block px-4 py-2 hover:bg-gray-100">ログアウト</a>
+              </li>
+              <li>
+                <a href="{% url 'accounts:delete' %}"
+                   class="block px-4 py-2 hover:bg-gray-100 text-red-600">アカウント削除</a>
+              </li>
+            </ul>
+          </div>
+          <span class="font-bold border-2 border-blue-400 rounded-lg px-2 py-1">{{ user.username }}</span>
+        </li>
+      {% else %}
+        <li>
+          <a href="{% url 'accounts:login' %}"
+             class="hover:text-blue-300 transition">Login</a>
+        </li>
+        <li>
+          <a href="{% url 'accounts:signup' %}"
+             class="hover:text-blue-300 transition">Sign Up</a>
+        </li>
+        <li class="font-bold border-2 border-yellow-400 rounded-lg px-2 py-1">AnonymousUser</li>
+      {% endif %}
     </ul>
   </div>
 </nav>
