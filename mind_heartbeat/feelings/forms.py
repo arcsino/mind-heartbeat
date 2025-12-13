@@ -6,7 +6,15 @@ from .models import Feeling
 class FeelingForm(forms.ModelForm):
     class Meta:
         model = Feeling
-        fields = ("stamp", "comment")
+        fields = ("stamp", "comment", "felt_at")
+        widgets = {
+            "felt_at": forms.DateTimeInput(
+                attrs={
+                    "type": "datetime-local",
+                    "class": "form-control block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-blue-400 focus:border-blue-400 transition",
+                }
+            )
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

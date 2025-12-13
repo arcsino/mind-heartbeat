@@ -31,6 +31,18 @@ Heartbeat{% endblock %} {% block content %}
         {% endif %}
       </div>
     </div>
+    <div>
+      <label
+        for="id_felt_at"
+        class="block mb-2 text-sm font-semibold text-gray-700"
+        >Felt at</label
+      >
+      <div>
+        {{ form.felt_at }} {% if form.felt_at.errors %}
+        <div class="text-red-500 text-xs mt-1">{{ form.felt_at.errors }}</div>
+        {% endif %}
+      </div>
+    </div>
     <button
       type="submit"
       class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 px-4 rounded-lg shadow transition"
