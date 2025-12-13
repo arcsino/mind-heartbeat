@@ -140,6 +140,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.User"
 
+# Login and logout settings
+LOGIN_REDIRECT_URL = "feelings:index"
+LOGOUT_REDIRECT_URL = "accounts:login"
+
 
 # Rest framework settings
 
