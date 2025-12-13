@@ -1,10 +1,5 @@
 {% extends "_shared/base.html" %} {% load static %} {% block title %}Feelings
 Graph - Mind Heartbeat{% endblock %} {% block content %}
-<a
-  href="{% url 'feelings:list' %}"
-  class="inline-block mb-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-4 py-2 rounded-lg shadow transition"
-  >&larr; Back to List</a
->
 <div
   class="max-w-2xl mx-auto bg-white border border-gray-200 rounded-xl shadow-lg p-8 mt-8"
 >
@@ -14,25 +9,20 @@ Graph - Mind Heartbeat{% endblock %} {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   const ctx = document.getElementById('feelingsChart').getContext('2d');
-  const labels = {{ labels|safe }};
-  const scores = {{ scores|safe }};
-  const comments = {{ comments|safe }};
-  const yLabels = {{ y_labels|safe }};
-  const yScores = {{ y_scores|safe }};
-  // スタンプ画像のstaticパスリストを生成
-  const stampImages = [
-  	{% for img in stamp_images %}
-  		'{% static "feelings/stamps/" %}{{ img }}'{% if not forloop.last %},{% endif %}
-  	{% endfor %}
-  ];
+  const feelings = {{ feelings|safe }};
+  const labels = feelings.map(f => f.created_at);
+  const yValues = feelings.map(f => f.score);
+  const names = feelings.map(f => f.name);
+  const comments = feelings.map(f => f.comment);
+  const stampImages = feelings.map(f => f.image);
 
   new Chart(ctx, {
   	type: 'line',
   	data: {
   		labels: labels,
   		datasets: [{
-  			label: 'Score',
-  			data: scores,
+  			label: 'Feeling',
+  			data: yValues,
   			borderColor: '#3b82f6',
   			backgroundColor: function(context) {
   				const chart = context.chart;
@@ -45,10 +35,9 @@ Graph - Mind Heartbeat{% endblock %} {% block content %}
   			},
   			tension: 0,
   			pointRadius: 4,
-  			pointStyle: scores.map((_, i) => {
-  				// スタンプ画像を循環して割り当てる（例:スコアやy軸に応じて割り当てる場合は調整）
+  			pointStyle: stampImages.map(imgUrl => {
   				const img = new Image();
-  				img.src = stampImages[i % stampImages.length];
+  				img.src = imgUrl;
   				return img;
   			}),
   			pointBackgroundColor: '#3b82f6',
@@ -61,9 +50,13 @@ Graph - Mind Heartbeat{% endblock %} {% block content %}
   			legend: { display: false },
   			tooltip: {
   				callbacks: {
+  					title: function(context) {
+  						const idx = context[0].dataIndex;
+  						return names[idx] + '（スコア: ' + yValues[idx] + '）';
+  					},
   					afterBody: function(context) {
   						const idx = context[0].dataIndex;
-  						const comment = comments[idx] || '';
+  						const comment = feelings[idx]?.comment || '';
   						return comment ? 'Comment: ' + comment : '';
   					}
   				}
@@ -71,10 +64,13 @@ Graph - Mind Heartbeat{% endblock %} {% block content %}
   		},
   		scales: {
   			y: {
-  				type: 'category',
-  				labels: yLabels,
-  				title: { display: true, text: 'Stamp' },
-  				reverse: true // 上が高い順
+  				type: 'linear',
+  				min: Math.min(...yValues) - 1,
+  				max: Math.max(...yValues) + 1,
+  				title: { display: true, text: 'Score' },
+  				ticks: {
+  					stepSize: 1
+  				}
   			},
   			x: { title: { display: true, text: 'Time' } }
   		}

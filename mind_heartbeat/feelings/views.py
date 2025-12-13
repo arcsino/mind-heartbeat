@@ -2,10 +2,11 @@ import os
 
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views import generic
 
 from .forms import FeelingForm
-from .models import Feeling
+from .models import Feeling, Stamp
 
 
 class IndexView(generic.TemplateView):
@@ -85,29 +86,19 @@ class FeelingGraphView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        feelings = Feeling.objects.filter(created_by=self.request.user).select_related(
-            "stamp"
-        )
-        stamp_score_pairs = sorted(
-            set((f.stamp.name, f.stamp.score) for f in feelings),
-            key=lambda x: x[1],
-            reverse=True,
-        )
-        y_labels = [name for name, score in stamp_score_pairs]
-        y_scores = [score for name, score in stamp_score_pairs]
-        feelings = sorted(feelings, key=lambda f: f.created_at)
-        context["labels"] = [f.created_at.strftime("%Y-%m-%d %H:%M") for f in feelings]
-        context["scores"] = [f.stamp.score for f in feelings]
-        context["comments"] = [f.comment or "" for f in feelings]
-        context["y_labels"] = y_labels
-        context["y_scores"] = y_scores
-        stamps_dir = os.path.join(
-            os.path.dirname(__file__), "..", "static", "feelings", "stamps"
-        )
-        stamp_images = [
-            f
-            for f in os.listdir(stamps_dir)
-            if f.lower().endswith((".png", ".jpg", ".jpeg", ".gif"))
+        feelings = [
+            {
+                "name": f.stamp.name,
+                "score": f.stamp.score,
+                "comment": f.comment or "",
+                "image": f.stamp.image.url if f.stamp.image else "",
+                "created_at": timezone.localtime(f.created_at).strftime(
+                    "%Y-%m-%d %H:%M"
+                ),
+            }
+            for f in Feeling.objects.filter(created_by=self.request.user)
+            .select_related("stamp")
+            .order_by("created_at")
         ]
-        context["stamp_images"] = stamp_images
+        context["feelings"] = feelings
         return context
