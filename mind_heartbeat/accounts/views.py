@@ -1,9 +1,18 @@
-from django.contrib.auth import login
+from django.contrib import messages
+from django.contrib.auth import login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView as DjangoLoginView
+from django.contrib.auth.views import PasswordChangeView as DjangoPasswordChangeView
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import FormView, TemplateView, UpdateView
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .forms import LoginForm, NicknameUpdateForm, PasswordChangeForm, SignupForm
 from .serializers import (
     LoginSerializer,
     PasswordChangeSerializer,
@@ -11,6 +20,78 @@ from .serializers import (
     UserSerializer,
     UserUpdateSerializer,
 )
+
+
+class SignupView(FormView):
+    template_name = "accounts/signup.html"
+    form_class = SignupForm
+    success_url = reverse_lazy("accounts:login")
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        messages.success(self.request, "アカウントを作成しました。")
+        return super().form_valid(form)
+
+
+class LoginView(DjangoLoginView):
+    template_name = "accounts/login.html"
+    authentication_form = LoginForm
+    redirect_authenticated_user = True
+    success_url = reverse_lazy("feelings:index")
+
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = "accounts/profile.html"
+
+
+class NicknameUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = "accounts/nickname_update.html"
+    form_class = NicknameUpdateForm
+    success_url = reverse_lazy("accounts:profile")
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        messages.success(self.request, "ニックネームを変更しました。")
+        return super().form_valid(form)
+
+
+class PasswordChangeView(LoginRequiredMixin, DjangoPasswordChangeView):
+    template_name = "accounts/password_change.html"
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy("accounts:profile")
+
+    def form_valid(self, form):
+        messages.success(self.request, "パスワードを変更しました。")
+        return super().form_valid(form)
+
+
+class LogoutView(View):
+    template_name = "accounts/logout.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        logout(request)
+        messages.success(request, "ログアウトしました。")
+        return redirect(reverse_lazy("accounts:login"))
+
+
+class DeleteUserView(LoginRequiredMixin, View):
+    template_name = "accounts/delete.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        user = request.user
+        logout(request)
+        user.delete()
+        messages.success(request, "アカウントを削除しました。")
+        return redirect(reverse_lazy("feelings:index"))
 
 
 class UserRegistrationAPIView(generics.CreateAPIView):

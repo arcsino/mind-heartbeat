@@ -1,0 +1,23 @@
+{% extends "_shared/base.html" %}
+{% block title %}
+  Profile - Mind Heartbeat
+{% endblock title %}
+{% block content %}
+  <div class="max-w-md mx-auto bg-white border border-gray-200 rounded-xl shadow-lg p-8 mt-12">
+    <h1 class="text-2xl font-bold mb-6 text-center">User Profile</h1>
+    <div class="space-y-4">
+      <div>
+        <span class="font-semibold text-gray-700">Username:</span>
+        <span class="ml-2">{{ user.username }}</span>
+      </div>
+      <div>
+        <span class="font-semibold text-gray-700">Nickname:</span>
+        <span class="ml-2">{{ user.nickname }}</span>
+      </div>
+      <div>
+        <span class="font-semibold text-gray-700">Joined:</span>
+        <span class="ml-2">{{ user.date_joined|date:"Y-m-d H:i" }}</span>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

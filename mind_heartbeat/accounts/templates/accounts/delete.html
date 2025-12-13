@@ -1,0 +1,22 @@
+{% extends "_shared/base.html" %}
+{% block title %}
+  Account Deletion - Mind Heartbeat
+{% endblock title %}
+{% block content %}
+  <div class="flex justify-center items-center min-h-[70vh]">
+    <form method="post"
+          class="w-full max-w-md bg-gradient-to-r from-white to-gray-50 p-8 rounded-xl border border-gray-200 shadow-lg space-y-6 text-center">
+      <h1 class="text-2xl font-bold mb-8">Account Deletion</h1>
+      <p class="mb-6 text-red-600">
+        本当にアカウントを削除しますか？
+        <br>
+        この操作は取り消せません。
+      </p>
+      {% csrf_token %}
+      <button type="submit"
+              class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 px-4 rounded-lg shadow transition">
+        Delete Account
+      </button>
+    </form>
+  </div>
+{% endblock content %}
