@@ -1,56 +1,40 @@
-{% extends "_shared/base.html" %} {% block title %}Feeling Detail - Mind
-Heartbeat{% endblock %} {% block content %}
-<div
-  class="max-w-xl mx-auto bg-gradient-to-r from-white to-gray-50 border border-gray-200 rounded-xl shadow-lg p-8 mt-8"
->
-  <h1 class="text-2xl font-bold mb-6 text-center">Feeling Detail</h1>
-  <div class="mb-4 flex items-center gap-3 justify-center">
-    <span
-      class="inline-block px-3 py-1 text-sm font-medium rounded bg-blue-100 text-blue-700"
-      >{{ feeling.stamp.name }}</span
-    >
-    <span class="text-xs text-gray-400"
-      >{{ feeling.created_at|date:'Y-m-d H:i' }}</span
-    >
-  </div>
-  <div class="mb-6">
-    <label class="block text-gray-500 text-xs mb-1">Comment</label>
-    <div class="text-lg text-gray-800 whitespace-pre-line">
-      {{ feeling.comment }}
+{% extends "_shared/base.html" %}
+{% block title %}
+  Feeling Detail - Mind Heartbeat
+{% endblock title %}
+{% block content %}
+  <div class="max-w-xl mx-auto bg-gradient-to-r from-white to-gray-50 border border-gray-200 rounded-xl shadow-lg p-8 mt-8">
+    <h1 class="text-2xl font-bold mb-6 text-center">Feeling Detail</h1>
+    <div class="mb-4 flex items-center gap-3 justify-center">
+      <span class="inline-block px-3 py-1 text-sm font-medium rounded bg-blue-100 text-blue-700">{{ feeling.stamp.name }}</span>
+      <span class="text-xs text-gray-400">{{ feeling.created_at|date:'Y-m-d H:i' }}</span>
     </div>
-  </div>
-  {% if feeling.hr_value %}
-  <div class="mb-6">
-    <label class="block text-gray-500 text-xs mb-1">Heart Rate</label>
-    <div class="text-base text-pink-600 font-semibold">
-      {{ feeling.hr_value }} bpm
+    <div class="mb-6">
+      <label class="block text-gray-500 text-xs mb-1">Comment</label>
+      <div class="text-lg text-gray-800 whitespace-pre-line">{{ feeling.comment }}</div>
     </div>
-    {% if feeling.hr_measured_at %}
-    <div class="text-xs text-gray-400">
-      ({{ feeling.hr_measured_at|date:'Y-m-d H:i' }})
-    </div>
+    {% if feeling.hr_value %}
+      <div class="mb-6">
+        <label class="block text-gray-500 text-xs mb-1">Heart Rate</label>
+        <div class="text-base text-pink-600 font-semibold">{{ feeling.hr_value }} bpm</div>
+        {% if feeling.hr_measured_at %}
+          <div class="text-xs text-gray-400">({{ feeling.hr_measured_at|date:'Y-m-d H:i' }})</div>
+        {% endif %}
+      </div>
     {% endif %}
+    <div class="flex flex-wrap gap-4 justify-between mt-8">
+      <a href="{% url 'feelings:list' %}"
+         class="inline-block px-5 py-2 rounded-lg bg-blue-500 text-white font-semibold shadow hover:bg-blue-600 transition">
+        Back to List
+      </a>
+      <a href="{% url 'feelings:update' feeling.pk %}"
+         class="inline-block px-5 py-2 rounded-lg bg-gray-500 text-white font-semibold shadow hover:bg-gray-600 transition">
+        Edit
+      </a>
+      <a href="{% url 'feelings:delete' feeling.pk %}"
+         class="inline-block px-5 py-2 rounded-lg bg-red-500 text-white font-semibold shadow hover:bg-red-600 transition">
+        Delete
+      </a>
+    </div>
   </div>
-  {% endif %}
-  <div class="flex flex-wrap gap-4 justify-between mt-8">
-    <a
-      href="{% url 'feelings:list' %}"
-      class="inline-block px-5 py-2 rounded-lg bg-blue-500 text-white font-semibold shadow hover:bg-blue-600 transition"
-    >
-      &larr; Back to List
-    </a>
-    <a
-      href="{% url 'feelings:update' feeling.pk %}"
-      class="inline-block px-5 py-2 rounded-lg bg-gray-500 text-white font-semibold shadow hover:bg-gray-600 transition"
-    >
-      Edit
-    </a>
-    <a
-      href="{% url 'feelings:delete' feeling.pk %}"
-      class="inline-block px-5 py-2 rounded-lg bg-red-500 text-white font-semibold shadow hover:bg-red-600 transition"
-    >
-      Delete
-    </a>
-  </div>
-</div>
-{% endblock %}
+{% endblock content %}

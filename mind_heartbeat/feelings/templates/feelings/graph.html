@@ -1,13 +1,15 @@
-{% extends "_shared/base.html" %} {% load static %} {% block title %}Feelings
-Graph - Mind Heartbeat{% endblock %} {% block content %}
-<div
-  class="max-w-2xl mx-auto bg-white border border-gray-200 rounded-xl shadow-lg p-8 mt-8"
->
-  <h1 class="text-2xl font-bold mb-6 text-center">Feelings Score Over Time</h1>
-  <canvas id="feelingsChart" class="w-full h-80"></canvas>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
+{% extends "_shared/base.html" %}
+{% load static %}
+{% block title %}
+    Feelings Graph - Mind Heartbeat
+{% endblock title %}
+{% block content %}
+    <div class="max-w-2xl mx-auto bg-white border border-gray-200 rounded-xl shadow-lg p-8 mt-8">
+        <h1 class="text-2xl font-bold mb-6 text-center">Feelings Score Over Time</h1>
+        <canvas id="feelingsChart" class="w-full h-80"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
   const ctx = document.getElementById('feelingsChart').getContext('2d');
   const feelings = {{ feelings|safe }};
   const labels = feelings.map(f => f.created_at);
@@ -76,5 +78,5 @@ Graph - Mind Heartbeat{% endblock %} {% block content %}
   		}
   	}
   });
-</script>
-{% endblock %}
+    </script>
+{% endblock content %}
