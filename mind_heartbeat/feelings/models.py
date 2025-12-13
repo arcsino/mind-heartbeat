@@ -1,3 +1,4 @@
+from datetime import datetime
 from uuid import uuid4
 
 from accounts.models import User
@@ -19,6 +20,13 @@ class Stamp(models.Model):
         verbose_name=_("スコア"),
         default=0,
         help_text=_("スタンプのスコアを整数で指定してください。"),
+    )
+    image = models.ImageField(
+        verbose_name=_("スタンプ画像"),
+        upload_to="stamps/",
+        blank=True,
+        null=True,
+        help_text=_("スタンプの画像ファイルをアップロードしてください。"),
     )
     created_at = models.DateTimeField(verbose_name=_("作成日時"), auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name=_("更新日時"), auto_now=True)
@@ -46,6 +54,11 @@ class Feeling(models.Model):
         max_length=500,
         blank=True,
         help_text=_("気持ちに関するコメントを入力してください。"),
+    )
+    felt_at = models.DateTimeField(
+        verbose_name=_("感じた日時"),
+        default=datetime.now(),
+        help_text=_("気持ちを感じた日時を指定してください。"),
     )
     created_by = models.ForeignKey(
         User,
