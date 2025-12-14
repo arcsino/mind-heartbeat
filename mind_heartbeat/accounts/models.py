@@ -65,8 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     nickname = models.CharField(
         verbose_name=_("ニックネーム"),
         max_length=30,
-        unique=True,
-        default=f"匿名{uuid4().hex[:12]}",
+        default=f"User:{uuid4().hex[:12]}",
     )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

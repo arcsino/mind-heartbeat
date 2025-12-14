@@ -14,36 +14,16 @@ class SignupForm(DjangoUserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["username"].widget.attrs.update(
-            {
-                "class": "form-control block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-blue-400 focus:border-blue-400 transition"
-            }
-        )
-        self.fields["password1"].widget.attrs.update(
-            {
-                "class": "form-control block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-blue-400 focus:border-blue-400 transition"
-            }
-        )
-        self.fields["password2"].widget.attrs.update(
-            {
-                "class": "form-control block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-blue-400 focus:border-blue-400 transition"
-            }
-        )
+        self.fields["username"].widget.attrs.update({"class": "form-control"})
+        self.fields["password1"].widget.attrs.update({"class": "form-control"})
+        self.fields["password2"].widget.attrs.update({"class": "form-control"})
 
 
 class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["username"].widget.attrs.update(
-            {
-                "class": "form-control block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-blue-400 focus:border-blue-400 transition"
-            }
-        )
-        self.fields["password"].widget.attrs.update(
-            {
-                "class": "form-control block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-blue-400 focus:border-blue-400 transition"
-            }
-        )
+        self.fields["username"].widget.attrs.update({"class": "form-control"})
+        self.fields["password"].widget.attrs.update({"class": "form-control"})
 
 
 class NicknameUpdateForm(forms.ModelForm):
@@ -53,19 +33,11 @@ class NicknameUpdateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["nickname"].widget.attrs.update(
-            {
-                "class": "form-control block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-blue-400 focus:border-blue-400 transition"
-            }
-        )
+        self.fields["nickname"].widget.attrs.update({"class": "form-control"})
 
 
 class PasswordChangeForm(DjangoPasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs.update(
-                {
-                    "class": "form-control block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-blue-400 focus:border-blue-400 transition"
-                }
-            )
+            field.widget.attrs.update({"class": "form-control"})

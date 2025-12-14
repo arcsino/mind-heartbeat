@@ -11,7 +11,7 @@ class FeelingForm(forms.ModelForm):
             "felt_at": forms.DateTimeInput(
                 attrs={
                     "type": "datetime-local",
-                    "class": "form-control block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-blue-400 focus:border-blue-400 transition",
+                    "class": "form-control",
                 }
             )
         }
@@ -20,12 +20,12 @@ class FeelingForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["stamp"].widget.attrs.update(
             {
-                "class": "form-control form-select block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-blue-400 focus:border-blue-400 transition"
+                "class": "form-select form-control",
             }
         )
         self.fields["comment"].widget.attrs.update(
             {
-                "class": "form-control block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-blue-400 focus:border-blue-400 transition",
+                "class": "form-control",
                 "rows": 5,
             }
         )

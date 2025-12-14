@@ -213,9 +213,9 @@ LOGGING = {
 }
 
 MESSAGE_TAGS = {
-    messages.DEBUG: "bg-gray-100 border border-gray-300 text-gray-700",
-    messages.INFO: "bg-blue-50 border border-blue-200 text-blue-800",
-    messages.SUCCESS: "bg-green-50 border border-green-200 text-green-800",
-    messages.WARNING: "bg-yellow-50 border border-yellow-200 text-yellow-800",
-    messages.ERROR: "bg-red-50 border border-red-200 text-red-800",
+    messages.DEBUG: "secondary",
+    messages.INFO: "info",
+    messages.SUCCESS: "success",
+    messages.WARNING: "warning",
+    messages.ERROR: "danger",
 }

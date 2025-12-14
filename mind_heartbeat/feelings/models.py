@@ -16,6 +16,22 @@ class Stamp(models.Model):
         unique=True,
         help_text=_("スタンプ名は必須です。固有の名前を指定してください。"),
     )
+    color = models.CharField(
+        verbose_name=_("スタンプ色"),
+        max_length=16,
+        choices=[
+            ("textcolor-red", "赤"),
+            ("textcolor-orange", "橙"),
+            ("textcolor-yellow", "黄"),
+            ("textcolor-lime", "黄緑"),
+            ("textcolor-green", "緑"),
+            ("textcolor-cyan", "水色"),
+            ("textcolor-blue", "青"),
+            ("textcolor-purple", "紫"),
+        ],
+        default="textcolor-blue",
+        help_text=_("感情の色を選択してください。"),
+    )
     score = models.IntegerField(
         verbose_name=_("スコア"),
         default=0,

@@ -29,7 +29,6 @@ class SignupView(FormView):
 
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)
         messages.success(self.request, "アカウントを作成しました。")
         return super().form_valid(form)
 
@@ -39,6 +38,10 @@ class LoginView(DjangoLoginView):
     authentication_form = LoginForm
     redirect_authenticated_user = True
     success_url = reverse_lazy("feelings:index")
+
+    def form_valid(self, form):
+        messages.success(self.request, "ログインしました。")
+        return super().form_valid(form)
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -68,7 +71,7 @@ class PasswordChangeView(LoginRequiredMixin, DjangoPasswordChangeView):
         return super().form_valid(form)
 
 
-class LogoutView(View):
+class LogoutView(LoginRequiredMixin, View):
     template_name = "accounts/logout.html"
 
     def get(self, request):

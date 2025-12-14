@@ -1,15 +1,17 @@
 {% extends "_shared/base.html" %}
 {% load static %}
 {% block title %}
-  Feelings Graph - Mind Heartbeat
+    Feelings Graph - Mind Heartbeat
 {% endblock title %}
 {% block content %}
-  <div class="max-w-2xl mx-auto bg-white border border-gray-200 rounded-xl shadow-lg p-8 mt-8">
-    <h1 class="text-2xl font-bold mb-6 text-center">Feelings Score Over Time</h1>
-    <canvas id="feelingsChart" class="w-full h-80"></canvas>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
+    <div class="d-flex justify-content-center align-items-center min-vh-85">
+        <div class="card shadow w-100 mx-auto p-4 max-w-720 col-12 col-md-10 col-lg-8 col-xl-7">
+            <h1 class="h2 fw-bold mb-4 text-center">感情スコアの推移</h1>
+            <canvas id="feelingsChart" class="max-h-520"></canvas>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
   const ctx = document.getElementById('feelingsChart').getContext('2d');
   const feelings = {{ feelings|safe }};
   const labels = feelings.map(f => f.created_at);
@@ -78,5 +80,5 @@
   		}
   	}
   });
-  </script>
+    </script>
 {% endblock content %}

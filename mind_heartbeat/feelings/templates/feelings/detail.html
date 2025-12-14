@@ -3,38 +3,56 @@
   Feeling Detail - Mind Heartbeat
 {% endblock title %}
 {% block content %}
-  <div class="max-w-xl mx-auto bg-gradient-to-r from-white to-gray-50 border border-gray-200 rounded-xl shadow-lg p-8 mt-8">
-    <h1 class="text-2xl font-bold mb-6 text-center">Feeling Detail</h1>
-    <div class="mb-4 flex items-center gap-3 justify-center">
-      <span class="inline-block px-3 py-1 text-sm font-medium rounded bg-blue-100 text-blue-700">{{ feeling.stamp.name }}</span>
-      <span class="text-xs text-gray-400">{{ feeling.created_at|date:'Y-m-d H:i' }}</span>
-    </div>
-    <div class="mb-6">
-      <label class="block text-gray-500 text-xs mb-1">Comment</label>
-      <div class="text-lg text-gray-800 whitespace-pre-line">{{ feeling.comment }}</div>
-    </div>
-    {% if feeling.hr_value %}
-      <div class="mb-6">
-        <label class="block text-gray-500 text-xs mb-1">Heart Rate</label>
-        <div class="text-base text-pink-600 font-semibold">{{ feeling.hr_value }} bpm</div>
-        {% if feeling.hr_measured_at %}
-          <div class="text-xs text-gray-400">({{ feeling.hr_measured_at|date:'Y-m-d H:i' }})</div>
-        {% endif %}
+  <div class="d-flex justify-content-center align-items-center min-vh-85">
+    <div class="card shadow w-100 mx-auto p-4 max-w-520 col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mt-5">
+      <h1 class="h2 fw-bold mb-4 text-center">感情記録の詳細</h1>
+      <div class="mb-3 d-flex flex-row align-items-center justify-content-center gap-3">
+        <div class="d-flex flex-column align-items-start justify-content-center">
+          <span class="{{ feeling.stamp.color }} fs-6 px-3 mb-1">{{ feeling.stamp.name }}</span>
+          <span class="text-secondary small">{{ feeling.created_at|date:'Y-m-d H:i' }}</span>
+        </div>
+        <div>
+          {% if feeling.stamp.image %}
+            <img src="{{ feeling.stamp.image.url }}"
+                 alt="{{ feeling.stamp.name }}"
+                 class="rounded-circle border stamp-img-64 ms-2"
+                 height="64"
+                 width="64" />
+          {% else %}
+            <div class="bg-secondary bg-opacity-10 rounded-circle stamp-img-placeholder ms-2">
+              <i class="bi bi-card-image fs-3"></i>
+              <span class="no-image-label">No Image</span>
+            </div>
+          {% endif %}
+        </div>
       </div>
-    {% endif %}
-    <div class="flex flex-wrap gap-4 justify-between mt-8">
-      <a href="{% url 'feelings:list' %}"
-         class="inline-block px-5 py-2 rounded-lg bg-blue-500 text-white font-semibold shadow hover:bg-blue-600 transition">
-        Back to List
-      </a>
-      <a href="{% url 'feelings:update' feeling.pk %}"
-         class="inline-block px-5 py-2 rounded-lg bg-gray-500 text-white font-semibold shadow hover:bg-gray-600 transition">
-        Edit
-      </a>
-      <a href="{% url 'feelings:delete' feeling.pk %}"
-         class="inline-block px-5 py-2 rounded-lg bg-red-500 text-white font-semibold shadow hover:bg-red-600 transition">
-        Delete
-      </a>
+      <div class="mb-4">
+        <label class="form-label text-secondary small">コメント</label>
+        <div class="fs-5 text-dark border rounded p-2 bg-light">{{ feeling.comment|default:'(なし)' }}</div>
+      </div>
+      {% if feeling.hr_value %}
+        <div class="mb-4">
+          <label class="form-label text-secondary small">心拍数</label>
+          <div class="fw-semibold text-danger">{{ feeling.hr_value }} bpm</div>
+          {% if feeling.hr_measured_at %}
+            <div class="text-secondary small">({{ feeling.hr_measured_at|date:'Y-m-d H:i' }})</div>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="d-flex flex-wrap gap-2 justify-content-between mt-4">
+        <a href="{% url 'feelings:list' %}"
+           class="btn btn-primary flex-fill fw-bold">
+          <i class="bi bi-arrow-left me-2"></i>一覧へ戻る
+        </a>
+        <a href="{% url 'feelings:update' feeling.pk %}"
+           class="btn btn-secondary flex-fill fw-bold">
+          <i class="bi bi-pencil-square me-2"></i>編集
+        </a>
+        <a href="{% url 'feelings:delete' feeling.pk %}"
+           class="btn btn-danger flex-fill fw-bold">
+          <i class="bi bi-trash3 me-2"></i>削除
+        </a>
+      </div>
     </div>
   </div>
 {% endblock content %}

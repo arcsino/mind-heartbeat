@@ -3,26 +3,20 @@
   Mind Heartbeat
 {% endblock title %}
 {% block content %}
-  <div class="flex flex-col justify-center items-center min-h-[60vh]">
-    <h1 class="text-3xl font-bold mb-6 text-center">Welcome to Mind Heartbeat</h1>
-    <p class="text-center text-gray-600 mb-8">Track and manage your feelings with ease.</p>
-    <div class="flex justify-center gap-6">
+  <div class="d-flex flex-column justify-content-center align-items-center min-vh-85">
+    <h1 class="display-5 fw-bold mb-4 text-center">Welcome to Mind Heartbeat</h1>
+    <p class="text-center text-secondary mb-5">Mind Heartbeatは気持ちを記録・可視化するシステムです。</p>
+    <div class="d-flex justify-content-center gap-3">
       {% if user.is_authenticated %}
         <a href="{% url 'feelings:list' %}"
-           class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow transition">
-          View Feelings
-        </a>
+           class="btn btn-primary btn-lg shadow fw-bold px-4"><i class="bi bi-list me-2"></i>気持ちリスト</a>
         <a href="{% url 'feelings:create' %}"
-           class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow transition">
-          Create Feeling
-        </a>
+           class="btn btn-success btn-lg shadow fw-bold px-4"><i class="bi bi-plus-square me-2"></i>気持ち作成</a>
       {% else %}
         <a href="{% url 'accounts:login' %}"
-           class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow transition">Login</a>
+           class="btn btn-primary btn-lg shadow fw-bold px-4"><i class="bi bi-box-arrow-in-right me-2"></i>ログイン</a>
         <a href="{% url 'accounts:signup' %}"
-           class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow transition">
-          Sign Up
-        </a>
+           class="btn btn-success btn-lg shadow fw-bold px-4"><i class="bi bi-person-plus me-2"></i>ユーザ登録</a>
       {% endif %}
     </div>
   </div>

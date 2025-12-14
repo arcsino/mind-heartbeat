@@ -3,38 +3,38 @@
   Create Feeling - Mind Heartbeat
 {% endblock title %}
 {% block content %}
-  <h1 class="text-2xl font-bold mb-8 text-center">Create Feeling</h1>
-  <div class="flex justify-center items-center">
-    <form method="post"
-          class="w-full max-w-md bg-gradient-to-r from-white to-gray-50 p-8 rounded-xl border border-gray-200 shadow-lg space-y-6">
-      {% csrf_token %}
-      <div>
-        <label for="id_stamp" class="block mb-2 text-sm font-semibold text-gray-700">Stamp</label>
-        <div>
-          {{ form.stamp }}
-          {% if form.stamp.errors %}<div class="text-red-500 text-xs mt-1">{{ form.stamp.errors }}</div>{% endif %}
+  <div class="d-flex justify-content-center align-items-center min-vh-85">
+    <div class="card shadow w-100 mx-auto p-4 max-w-520 col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+      <h1 class="h2 fw-bold mb-4 text-center">感情記録の作成</h1>
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="mb-4">
+          <div class="mb-3">
+            <label for="id_stamp" class="form-label">
+              スタンプ<span class="badge bg-danger ms-1">必須</span>
+            </label>
+            <div class="mw-350">{{ form.stamp }}</div>
+            {% if form.stamp.errors %}<div class="text-danger small mt-1">{{ form.stamp.errors }}</div>{% endif %}
+          </div>
+          <div class="mb-3">
+            <label for="id_comment" class="form-label">コメント</label>
+            <div class="mw-350">{{ form.comment }}</div>
+            <div class="form-text small mt-1">{{ form.comment.help_text }}</div>
+            {% if form.comment.errors %}<div class="text-danger small mt-1">{{ form.comment.errors }}</div>{% endif %}
+          </div>
+          <div class="mb-3">
+            <label for="id_felt_at" class="form-label">
+              感じた日時<span class="badge bg-danger ms-1">必須</span>
+            </label>
+            <div class="mw-350">{{ form.felt_at }}</div>
+            <div class="form-text small mt-1">{{ form.felt_at.help_text }}</div>
+            {% if form.felt_at.errors %}<div class="text-danger small mt-1">{{ form.felt_at.errors }}</div>{% endif %}
+          </div>
         </div>
-      </div>
-      <div>
-        <label for="id_comment"
-               class="block mb-2 text-sm font-semibold text-gray-700">Comment</label>
-        <div>
-          {{ form.comment }}
-          {% if form.comment.errors %}<div class="text-red-500 text-xs mt-1">{{ form.comment.errors }}</div>{% endif %}
-        </div>
-      </div>
-      <div>
-        <label for="id_felt_at"
-               class="block mb-2 text-sm font-semibold text-gray-700">Felt at</label>
-        <div>
-          {{ form.felt_at }}
-          {% if form.felt_at.errors %}<div class="text-red-500 text-xs mt-1">{{ form.felt_at.errors }}</div>{% endif %}
-        </div>
-      </div>
-      <button type="submit"
-              class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 px-4 rounded-lg shadow transition">
-        Create
-      </button>
-    </form>
+        <button type="submit" class="btn btn-primary w-100 fw-bold py-2">
+          <i class="bi bi-plus-square me-2"></i>記録する
+        </button>
+      </form>
+    </div>
   </div>
 {% endblock content %}
