@@ -12,23 +12,26 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+import environ
 from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables from .env file
+env = environ.Env()
+environ.Env.read_env(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-z^b4e2=#xy+gftd=m3w&f56izice1g$5p=e)2m)i*%q(ju+7y-"
+SECRET_KEY = env("SECRET_KEY")
 
-# SECURITY WARNING: don"t run with debug turned on in production!
-DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env.bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [env("ALLOWED_HOSTS")]
 
 # Application definition
 
@@ -77,7 +80,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "mind_heartbeat.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
@@ -87,7 +89,6 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -107,7 +108,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -118,7 +118,6 @@ TIME_ZONE = "Asia/Tokyo"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -144,7 +143,6 @@ AUTH_USER_MODEL = "accounts.User"
 LOGIN_REDIRECT_URL = "feelings:index"
 LOGOUT_REDIRECT_URL = "accounts:login"
 
-
 # Rest framework settings
 
 REST_FRAMEWORK = {
@@ -161,11 +159,9 @@ REST_FRAMEWORK = {
     },
 }
 
-
 # Cors settings
 
-CORS_ORIGIN_WHITELIST = []
-
+CORS_ORIGIN_WHITELIST = [env("CORS_ORIGIN_WHITELIST")]
 
 # Logging configuration
 
