@@ -16,9 +16,11 @@ import environ
 from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load environment variables from .env file
+
 env = environ.Env()
 environ.Env.read_env(BASE_DIR / ".env")
 
@@ -26,9 +28,11 @@ environ.Env.read_env(BASE_DIR / ".env")
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = [env("ALLOWED_HOSTS")]
@@ -45,6 +49,7 @@ INSTALLED_APPS = [
     # Local apps
     "accounts.apps.AccountsConfig",
     "feelings.apps.FeelingsConfig",
+    "heartrates.apps.HeartratesConfig",
     # Third-party apps
     "rest_framework",
     "corsheaders",
@@ -127,6 +132,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Media files
+
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -140,14 +146,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
 
 # Login and logout settings
+
 LOGIN_REDIRECT_URL = "feelings:index"
 LOGOUT_REDIRECT_URL = "accounts:login"
 
 # Rest framework settings
 
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.SessionAuthentication",  # for Website
+        "rest_framework_simplejwt.authentication.JWTAuthentication",  # for wearOS
     ],
     "DEFAULT_THROTTLE_CLASSES": [
         "rest_framework.throttling.AnonRateThrottle",
@@ -157,6 +166,19 @@ REST_FRAMEWORK = {
         "anon": "100/day",
         "user": "1000/day",
     },
+}
+
+# Simple JWT settings
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": None,  # no expiration
+    "REFRESH_TOKEN_LIFETIME": None,  # no expiration
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
 }
 
 # Cors settings

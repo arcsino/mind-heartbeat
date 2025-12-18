@@ -25,6 +25,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path(route="", view=include("feelings.urls")),
     path(route="accounts/", view=include("accounts.urls")),
+    path(route="heartrates/", view=include("heartrates.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
