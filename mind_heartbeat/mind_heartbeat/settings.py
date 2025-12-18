@@ -155,8 +155,7 @@ LOGOUT_REDIRECT_URL = "accounts:login"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",  # for Website
-        "rest_framework_simplejwt.authentication.JWTAuthentication",  # for wearOS
+        "rest_framework.authentication.SessionAuthentication",
     ],
     "DEFAULT_THROTTLE_CLASSES": [
         "rest_framework.throttling.AnonRateThrottle",
@@ -166,19 +165,6 @@ REST_FRAMEWORK = {
         "anon": "100/day",
         "user": "1000/day",
     },
-}
-
-# Simple JWT settings
-
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": None,  # no expiration
-    "REFRESH_TOKEN_LIFETIME": None,  # no expiration
-    "ROTATE_REFRESH_TOKENS": False,
-    "BLACKLIST_AFTER_ROTATION": False,
-    "ALGORITHM": "HS256",
-    "SIGNING_KEY": SECRET_KEY,
-    "AUTH_HEADER_TYPES": ("Bearer",),
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
 }
 
 # Cors settings
