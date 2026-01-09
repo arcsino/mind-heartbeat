@@ -100,5 +100,17 @@ class FeelingGraphView(generic.TemplateView):
             .select_related("stamp")
             .order_by("created_at")
         ]
+        from heartrates.models import HeartRate
+
+        heartrates = [
+            {
+                "bpm": h.bpm,
+                "timestamp": timezone.localtime(h.timestamp).strftime("%Y-%m-%d %H:%M"),
+            }
+            for h in HeartRate.objects.filter(user=self.request.user).order_by(
+                "timestamp"
+            )
+        ]
         context["feelings"] = feelings
+        context["heartrates"] = heartrates
         return context
