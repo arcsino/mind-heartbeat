@@ -1,0 +1,35 @@
+{% extends "_shared/base.html" %}
+{% block title %}
+  WearOS連携の作成 - Mind Heartbeat
+{% endblock title %}
+{% block content %}
+  <div class="d-flex justify-content-center align-items-center min-vh-85">
+    <div class="card shadow w-100 mx-auto p-4 max-w-520 col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+      <h1 class="h2 fw-bold mb-4 text-center">WearOS連携の作成</h1>
+      {% if token %}
+        <div class="alert alert-success text-center">
+          <strong>認証トークン:</strong>
+          <span class="fw-bold text-monospace">{{ token }}</span>
+          <br>
+          <span class="text-danger small">※このトークンは一度しか表示されません。必ず控えてください。</span>
+        </div>
+        <a href="{% url 'heartrates:detail-wearos-integration-with-token' token=token %}"
+           class="btn btn-primary w-100 mt-3">トップへ戻る</a>
+      {% else %}
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <div class="mb-4 text-center">
+            <p>
+              WearOS連携を新規作成します。
+              <br>
+              作成後、認証トークンが表示されます。
+            </p>
+          </div>
+          <button type="submit" class="btn btn-success w-100 fw-bold py-2">
+            <i class="bi bi-link-45deg me-2"></i>連携を作成
+          </button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+{% endblock content %}
