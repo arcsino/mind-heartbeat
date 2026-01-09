@@ -10,6 +10,7 @@ class WearOSIntegration(models.Model):
         User, on_delete=models.CASCADE, related_name="wearos_integration"
     )
     token_hash = models.CharField(max_length=64, unique=True)
+    is_connected = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
