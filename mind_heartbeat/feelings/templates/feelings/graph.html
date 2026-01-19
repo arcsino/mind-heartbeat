@@ -4,11 +4,11 @@
     Feelings Graph - Mind Heartbeat
 {% endblock title %}
 {% block content %}
-    <div class="container-fluid min-vh-85 px-0">
+    <div class="container-fluid min-vh-85 px-0 pt-5">
         <div class="row gx-0">
             <div class="col-12 col-lg-6 mb-4 d-flex px-0">
                 <div class="card shadow w-100 p-4 d-flex flex-column mx-3">
-                    <h1 class="h2 fw-bold mb-4 text-center">感情スコアの推移</h1>
+                    <h1 class="h2 fw-bold mb-4 text-center">気持ちのスコアの推移</h1>
                     <canvas id="feelingsChart" class="max-h-520 w-100"></canvas>
                 </div>
             </div>
@@ -22,7 +22,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-	// 感情グラフ
+	// 気持ちグラフ
 	const ctx = document.getElementById('feelingsChart').getContext('2d');
 	const feelings = {{ feelings|safe }};
 	const labels = feelings.map(f => f.created_at);

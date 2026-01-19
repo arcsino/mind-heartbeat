@@ -87,7 +87,7 @@ class DeleteWearOSIntegrationView(LoginRequiredMixin, DeleteView):
 
 
 class HeartRateReceiveView(GenericAPIView):
-    """WearOSデバイスから心拍数データを受信するAPIビュー（トークン認証）"""
+    """WearOSデバイスから心拍数データを受信するAPIビュー"""
 
     serializer_class = HeartRateSerializer
 

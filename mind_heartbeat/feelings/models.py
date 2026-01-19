@@ -30,7 +30,7 @@ class Stamp(models.Model):
             ("textcolor-purple", "紫"),
         ],
         default="textcolor-blue",
-        help_text=_("感情の色を選択してください。"),
+        help_text=_("気持ちの色を選択してください。"),
     )
     score = models.IntegerField(
         verbose_name=_("スコア"),

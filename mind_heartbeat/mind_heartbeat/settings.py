@@ -96,6 +96,21 @@ DATABASES = {
     }
 }
 
+# MySQL configuration for deployment
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": env("DB_ENGINE"),
+#         "NAME": env("DB_NAME"),
+#         "USER": env("DB_USER"),
+#         "PASSWORD": env("DB_PASSWORD"),
+#         "HOST": env("DB_HOST"),
+#         "OPTIONS": {
+#             "init_command": "SET innodb_strict_mode=1",
+#         },
+#     }
+# }
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
