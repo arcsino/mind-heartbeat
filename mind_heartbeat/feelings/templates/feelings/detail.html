@@ -9,7 +9,7 @@
       <div class="mb-3 d-flex flex-row align-items-center justify-content-center gap-3">
         <div class="d-flex flex-column align-items-start justify-content-center">
           <span class="{{ feeling.stamp.color }} fs-6 px-3 mb-1">{{ feeling.stamp.name }}</span>
-          <span class="text-secondary small">{{ feeling.created_at|date:'Y-m-d H:i' }}</span>
+          <span class="text-secondary small">{{ feeling.felt_at|date:'Y-m-d H:i' }}</span>
         </div>
         <div>
           {% if feeling.stamp.image %}
@@ -30,15 +30,6 @@
         <label class="form-label text-secondary small">コメント</label>
         <div class="fs-5 text-dark border rounded p-2 bg-light">{{ feeling.comment|default:'(なし)' }}</div>
       </div>
-      {% if feeling.hr_value %}
-        <div class="mb-4">
-          <label class="form-label text-secondary small">心拍数</label>
-          <div class="fw-semibold text-danger">{{ feeling.hr_value }} bpm</div>
-          {% if feeling.hr_measured_at %}
-            <div class="text-secondary small">({{ feeling.hr_measured_at|date:'Y-m-d H:i' }})</div>
-          {% endif %}
-        </div>
-      {% endif %}
       <div class="d-flex flex-wrap gap-2 justify-content-between mt-4">
         <a href="{% url 'feelings:list' %}"
            class="btn btn-primary flex-fill fw-bold">

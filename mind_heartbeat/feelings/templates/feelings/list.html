@@ -50,7 +50,7 @@
             </div>
             <div class="col ps-2">
               <div class="d-flex align-items-center gap-2 mb-1">
-                <span class="text-secondary small">{{ feeling.created_at|date:'Y-m-d H:i' }}</span>
+                <span class="text-secondary small">{{ feeling.felt_at|date:'Y-m-d H:i' }}</span>
                 <span class="{{ feeling.stamp.color }}">{{ feeling.stamp.name }}</span>
               </div>
               <div class="text-dark">{{ feeling.comment|default:'(なし)' }}</div>
