@@ -25,7 +25,7 @@
 	// 気持ちグラフ
 	const ctx = document.getElementById('feelingsChart').getContext('2d');
 	const feelings = {{ feelings|safe }};
-	const labels = feelings.map(f => f.created_at);
+	const labels = feelings.map(f => f.felt_at);
 	const yValues = feelings.map(f => f.score);
 	const names = feelings.map(f => f.name);
 	const comments = feelings.map(f => f.comment);

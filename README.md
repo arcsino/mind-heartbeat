@@ -32,9 +32,12 @@
    ※この設定を行わないとサーバーを起動できません。
 
    ```env
-   # 例
-   SECRET_KEY=your-secret-key
+   SECRET_KEY="django-insecure-z^b4e2=#xy+gftd=m3w&f56izice1g$5p=e)2m)i*%q(ju+7y-"
    DEBUG=True
+   # ALLOWED_HOSTS="127.0.0.1"
+   ALLOWED_HOSTS="*"
+   CORS_ORIGIN_WHITELIST="http://127.0.0.1"
+   CORS_ORIGIN_URL="http://localhost:8000"
    # 必要に応じて追加
    ```
 
@@ -71,6 +74,16 @@
    python manage.py migrate
    ```
 
+7. **管理者ユーザー（スーパーユーザー）の作成**
+
+   管理画面にログインするためのスーパーユーザーを作成します。
+
+   ```powershell
+   python manage.py createsuperuser
+   ```
+
+   プロンプトに従い、ユーザー名、メールアドレス、パスワードを入力してください。
+
 ---
 
 ## 開発サーバーの起動
@@ -99,6 +112,6 @@
 
 ## その他
 
-- 管理画面: `/admin/` でアクセス可能(スーパーユーザー作成は `python manage.py createsuperuser` を実行)
+- 管理画面: `/admin/` でアクセス可能
 - 静的ファイル: `static/` ディレクトリ
 - テンプレート: `mind_heartbeat/templates/` 配下

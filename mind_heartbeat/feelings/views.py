@@ -92,13 +92,11 @@ class FeelingGraphView(generic.TemplateView):
                 "score": f.stamp.score,
                 "comment": f.comment or "",
                 "image": f.stamp.image.url if f.stamp.image else "",
-                "created_at": timezone.localtime(f.created_at).strftime(
-                    "%Y-%m-%d %H:%M"
-                ),
+                "felt_at": timezone.localtime(f.felt_at).strftime("%Y-%m-%d %H:%M"),
             }
             for f in Feeling.objects.filter(created_by=self.request.user)
             .select_related("stamp")
-            .order_by("created_at")
+            .order_by("felt_at")
         ]
         from heartrates.models import HeartRate
 
